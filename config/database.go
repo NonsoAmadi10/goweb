@@ -1,4 +1,4 @@
-package database 
+package database
 
 import (
 	"github.com/NonsoAmadi10/goweb/helpers"
@@ -9,7 +9,7 @@ import (
 
 var DB *gorm.DB
 
-func SetupDB(models...interface{}){
+func SetupDB(model...interface{}){
 	dbString := helpers.GetEnv("DATABASE_URL")
 	database, err := gorm.Open(postgres.Open(dbString), &gorm.Config{})
 
@@ -17,5 +17,5 @@ func SetupDB(models...interface{}){
 		panic("Failed to Connect to Database")
 	}
 
-	database.AutoMigrate(models...)
+	database.AutoMigrate(model...)
 }
