@@ -1,5 +1,12 @@
-package main 
+package main
+
+import (
+
+	"github.com/NonsoAmadi10/goweb/config"
+)
 
 
-
-func main(){}
+func main(){
+	// initialize database
+	database.SetupDB()
+}
