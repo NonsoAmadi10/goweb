@@ -18,6 +18,7 @@ func main(){
 	database.SetupDB(&models.Book{})
 
 	r.GET("/books", controllers.FindBooks)
+	r.POST("/book", controllers.CreateBook)
 
 	r.Run()
 }

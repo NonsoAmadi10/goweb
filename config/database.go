@@ -18,4 +18,6 @@ func SetupDB(model...interface{}){
 	}
 
 	database.AutoMigrate(model...)
+
+	DB = database
 }
