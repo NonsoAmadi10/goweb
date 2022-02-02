@@ -13,6 +13,7 @@ func SetupDB(model...interface{}){
 	dbString := helpers.GetEnv("DATABASE_URL")
 	database, err := gorm.Open(postgres.Open(dbString), &gorm.Config{})
 
+
 	if err != nil {
 		panic("Failed to Connect to Database")
 	}

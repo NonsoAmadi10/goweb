@@ -32,3 +32,55 @@ func CreateBook(c *gin.Context){
 	database.DB.Create(&book)
 	c.JSON(http.StatusOK, gin.H{" data": book})
 }
+
+func GetBook(c *gin.Context){
+	//Get param id
+	id := c.Param("id")
+	var book models.Book
+
+	if err := database.DB.Where("id = ? ", id).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": book})
+}
+
+func UpdateBook(c *gin.Context){
+	var book models.Book
+	//Get param id
+	id := c.Param("id")
+
+	
+
+	if err := database.DB.Where("id = ?", id).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	  }
+
+	var input models.UpdateBookInput
+	//validate input 
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+	}
+
+	database.DB.Model(&book).Omit("ID").Updates(&input)
+
+	c.JSON(http.StatusOK, gin.H{"data": book})
+}
+
+func DeleteBook(c *gin.Context){
+	// get param id 
+	id := c.Param("id")
+
+	var book models.Book
+
+	if err := database.DB.Where("id = ?", id).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	  }
+
+	  database.DB.Delete(&book)
+	  c.JSON(http.StatusOK, gin.H{"data": true})
+}
